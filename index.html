@@ -789,7 +789,7 @@
     <div class="lead-form">
       <input type="email" id="leadEmail" placeholder="✉️  Your email address" />
       <input type="tel" id="leadPhone" placeholder="📞  Your phone number" />
-      <button class="lead-submit-btn" onclick="submitLead()">🚀 Keep Me Updated — It's Free!</button>
+      <button class="lead-submit-btn" id="leadSubmitBtn" onclick="submitLead()">🚀 Keep Me Updated — It's Free!</button>
     </div>
     <div class="lead-success" id="leadSuccess">
       ✅ JazakAllah Khayr! We have received your details. We will be in touch soon!
@@ -985,7 +985,9 @@
   }
 
   // ========== LEAD CAPTURE FUNCTION ==========
-  function submitLead() {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuKUOh1ZE-K5JpNKpFVsMm2CMQgPLw3N3wW6e0VIF6Tx1pe78BiORtzD0OsN_zqWHz/exec';
+
+  async function submitLead() {
     const email = document.getElementById('leadEmail').value.trim();
     const phone = document.getElementById('leadPhone').value.trim();
 
@@ -994,29 +996,36 @@
       return;
     }
 
-    // Basic email validation
     if (email && !email.includes('@')) {
       alert('Please enter a valid email address.');
       return;
     }
 
-    // Store in localStorage (you can replace this with a real backend/API call)
-    const leads = JSON.parse(localStorage.getItem('hifzLeads') || '[]');
-    leads.push({
-      email: email,
-      phone: phone,
-      date: new Date().toISOString()
-    });
-    localStorage.setItem('hifzLeads', JSON.stringify(leads));
+    const btn = document.getElementById('leadSubmitBtn');
+    btn.textContent = '⏳ Sending...';
+    btn.disabled = true;
 
-    // Show success message
-    document.getElementById('leadSuccess').style.display = 'block';
-    document.getElementById('leadEmail').value = '';
-    document.getElementById('leadPhone').value = '';
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          phone: phone
+        })
+      });
 
-    console.log('Lead saved:', { email, phone });
-    // 👆 Replace this with your real backend API call e.g:
-    // fetch('https://yourapi.com/leads', { method: 'POST', body: JSON.stringify({email, phone}) })
+      document.getElementById('leadSuccess').style.display = 'block';
+      document.getElementById('leadEmail').value = '';
+      document.getElementById('leadPhone').value = '';
+      btn.textContent = '✅ Submitted!';
+
+    } catch(error) {
+      alert('Something went wrong. Please try again.');
+      btn.textContent = '🚀 Keep Me Updated — It\'s Free!';
+      btn.disabled = false;
+    }
   }
 </script>
 </body>
