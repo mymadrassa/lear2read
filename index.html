@@ -106,22 +106,9 @@
     box-shadow: 0 0 20px rgba(240,192,64,0.2);
   }
 
-  .mushaf-option .icon {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-
-  .mushaf-option .name {
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 5px;
-  }
-
-  .mushaf-option .detail {
-    font-size: 0.8rem;
-    color: #aaa;
-  }
-
+  .mushaf-option .icon { font-size: 2.5rem; margin-bottom: 10px; }
+  .mushaf-option .name { font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
+  .mushaf-option .detail { font-size: 0.8rem; color: #aaa; }
   .mushaf-option .pages {
     margin-top: 8px;
     background: rgba(240,192,64,0.2);
@@ -150,26 +137,14 @@
     background: rgba(255,255,255,0.04);
   }
 
-  .amount-option:hover {
-    border-color: #f0c040;
-  }
-
+  .amount-option:hover { border-color: #f0c040; }
   .amount-option.selected {
     border-color: #f0c040;
     background: rgba(240,192,64,0.15);
   }
 
-  .amount-option .val {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #f0c040;
-  }
-
-  .amount-option .lbl {
-    font-size: 0.75rem;
-    color: #aaa;
-    margin-top: 3px;
-  }
+  .amount-option .val { font-size: 1.3rem; font-weight: 800; color: #f0c040; }
+  .amount-option .lbl { font-size: 0.75rem; color: #aaa; margin-top: 3px; }
 
   /* CUSTOM INPUT */
   .custom-row {
@@ -179,11 +154,7 @@
     margin-top: 10px;
   }
 
-  .custom-row label {
-    font-size: 0.9rem;
-    color: #aaa;
-    white-space: nowrap;
-  }
+  .custom-row label { font-size: 0.9rem; color: #aaa; white-space: nowrap; }
 
   .custom-row input {
     flex: 1;
@@ -197,9 +168,7 @@
     transition: border 0.3s;
   }
 
-  .custom-row input:focus {
-    border-color: #f0c040;
-  }
+  .custom-row input:focus { border-color: #f0c040; }
 
   /* FREQUENCY */
   .freq-grid {
@@ -365,13 +334,7 @@
     margin-bottom: 12px;
   }
 
-  .milestone .m-label {
-    width: 100px;
-    font-size: 0.8rem;
-    color: #ccc;
-    flex-shrink: 0;
-  }
-
+  .milestone .m-label { width: 100px; font-size: 0.8rem; color: #ccc; flex-shrink: 0; }
   .milestone .bar-bg {
     flex: 1;
     height: 8px;
@@ -402,11 +365,215 @@
     display: none;
   }
 
+  /* ========== LEAD CAPTURE FORM ========== */
+  .lead-card {
+    background: linear-gradient(135deg, rgba(240,192,64,0.1), rgba(240,192,64,0.03));
+    border: 2px solid rgba(240,192,64,0.4);
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .lead-card h2 {
+    font-size: 1.2rem;
+    color: #f0c040;
+    margin-bottom: 8px;
+  }
+
+  .lead-card p {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .lead-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .lead-form input {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s;
+    width: 100%;
+  }
+
+  .lead-form input:focus { border-color: #f0c040; }
+  .lead-form input::placeholder { color: #888; }
+
+  .lead-submit-btn {
+    background: linear-gradient(135deg, #f0c040, #e8a000);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 5px;
+  }
+
+  .lead-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(240,192,64,0.4);
+  }
+
+  .lead-success {
+    display: none;
+    background: rgba(0,200,100,0.15);
+    border: 2px solid rgba(0,200,100,0.4);
+    border-radius: 12px;
+    padding: 15px;
+    color: #00c864;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  /* ========== WEBSITE BUTTON ========== */
+  .website-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #302b63, #24243e);
+    border: 2px solid #f0c040;
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f0c040;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 25px;
+  }
+
+  .website-btn:hover {
+    background: rgba(240,192,64,0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(240,192,64,0.3);
+  }
+
+  /* ========== SOCIAL MEDIA ========== */
+  .social-section {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .social-section h3 {
+    color: #f0c040;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .social-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .social-btn:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  .social-btn .s-icon { font-size: 2rem; }
+
+  .social-btn.instagram {
+    background: linear-gradient(135deg, rgba(193,53,132,0.2), rgba(253,29,29,0.2));
+    color: #f77737;
+  }
+
+  .social-btn.tiktok {
+    background: rgba(255,0,80,0.1);
+    color: #ff0050;
+  }
+
+  .social-btn.youtube {
+    background: rgba(255,0,0,0.1);
+    color: #ff0000;
+  }
+
+  .social-btn.facebook {
+    background: rgba(24,119,242,0.1);
+    color: #1877f2;
+  }
+
+  /* ========== COMMUNITY BUTTONS ========== */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .community-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .community-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+
+  .community-btn.telegram {
+    background: linear-gradient(135deg, #0088cc, #006699);
+    color: #fff;
+  }
+
+  .community-btn.discord {
+    background: linear-gradient(135deg, #5865f2, #404eed);
+    color: #fff;
+  }
+
+  .community-btn .c-icon { font-size: 1.5rem; }
+
+  /* FOOTER DIVIDER */
+  .footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 10px 0 25px 0;
+  }
+
   @media(max-width: 500px) {
     .mushaf-grid { grid-template-columns: 1fr; }
     .amount-grid { grid-template-columns: repeat(2, 1fr); }
     .result-grid { grid-template-columns: 1fr; }
     .freq-grid { grid-template-columns: 1fr; }
+    .social-grid { grid-template-columns: repeat(2, 1fr); }
+    .community-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -442,7 +609,6 @@
   <!-- STEP 2 — MEMORIZATION AMOUNT -->
   <div class="card">
     <h2><span class="step">2</span> How Much Will You Memorize?</h2>
-
     <div class="amount-grid">
       <div class="amount-option" onclick="selectAmount(this, 'lines', 1)">
         <div class="val">1</div>
@@ -612,6 +778,65 @@
     </div>
   </div>
 
+  <!-- ========== LEAD CAPTURE ========== -->
+  <div style="margin-top: 40px;">
+    <hr class="footer-divider">
+  </div>
+
+  <div class="lead-card">
+    <h2>📬 Stay Connected & Get Free Resources</h2>
+    <p>Leave your details to receive Hifz tips, resources and updates from MyMadrassa</p>
+    <div class="lead-form">
+      <input type="email" id="leadEmail" placeholder="✉️  Your email address" />
+      <input type="tel" id="leadPhone" placeholder="📞  Your phone number" />
+      <button class="lead-submit-btn" onclick="submitLead()">🚀 Keep Me Updated — It's Free!</button>
+    </div>
+    <div class="lead-success" id="leadSuccess">
+      ✅ JazakAllah Khayr! We have received your details. We will be in touch soon!
+    </div>
+  </div>
+
+  <!-- ========== WEBSITE BUTTON ========== -->
+  <a href="https://www.mymadrassa.com/index.html" target="_blank" class="website-btn">
+    🌐 Visit MyMadrassa.com — Learn More
+  </a>
+
+  <!-- ========== SOCIAL MEDIA ========== -->
+  <div class="social-section">
+    <h3>📲 Follow Us on Social Media</h3>
+    <div class="social-grid">
+      <a href="https://www.instagram.com" target="_blank" class="social-btn instagram">
+        <span class="s-icon">📸</span>
+        Instagram
+      </a>
+      <a href="https://www.tiktok.com" target="_blank" class="social-btn tiktok">
+        <span class="s-icon">🎵</span>
+        TikTok
+      </a>
+      <a href="https://www.youtube.com" target="_blank" class="social-btn youtube">
+        <span class="s-icon">▶️</span>
+        YouTube
+      </a>
+      <a href="https://www.facebook.com" target="_blank" class="social-btn facebook">
+        <span class="s-icon">👥</span>
+        Facebook
+      </a>
+    </div>
+
+    <!-- ========== COMMUNITY BUTTONS ========== -->
+    <h3 style="margin-bottom:15px;">🤝 Join Our Community</h3>
+    <div class="community-grid">
+      <a href="https://t.me/yourlink" target="_blank" class="community-btn telegram">
+        <span class="c-icon">✈️</span>
+        Join Telegram
+      </a>
+      <a href="https://discord.gg/yourlink" target="_blank" class="community-btn discord">
+        <span class="c-icon">🎮</span>
+        Join Discord
+      </a>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -644,7 +869,6 @@
   function selectAmount(el, type, val) {
     document.querySelectorAll('.amount-option').forEach(e => e.classList.remove('selected'));
     el.classList.add('selected');
-    
     if (type === 'custom') {
       document.getElementById('customRow').style.display = 'flex';
       state.amountType = 'custom';
@@ -664,13 +888,11 @@
   }
 
   function calculate() {
-    // Get custom days if filled
     const customDays = parseInt(document.getElementById('customDays').value);
     if (customDays && customDays >= 1 && customDays <= 7) {
       state.sessionsPerWeek = customDays;
     }
 
-    // Get amount
     let pagesPerSession;
     if (state.amountType === 'custom') {
       const customAmt = parseFloat(document.getElementById('customAmount').value);
@@ -680,32 +902,23 @@
         return;
       }
       document.getElementById('amountError').style.display = 'none';
-      if (customUnit === 'page') {
-        pagesPerSession = customAmt;
-      } else {
-        pagesPerSession = customAmt / state.linesPerPage;
-      }
+      pagesPerSession = customUnit === 'page' ? customAmt : customAmt / state.linesPerPage;
     } else if (state.amountType === 'lines') {
       pagesPerSession = state.amountValue / state.linesPerPage;
     } else {
       pagesPerSession = state.amountValue;
     }
 
-    // Pages per week
     const pagesPerWeek = pagesPerSession * state.sessionsPerWeek;
-    // Total days
     const totalWeeks = state.totalPages / pagesPerWeek;
     const totalDays = Math.ceil(totalWeeks * 7);
 
-    // Start date
     const startDateVal = document.getElementById('startDate').value;
     const startDate = startDateVal ? new Date(startDateVal) : new Date();
 
-    // Completion date
     const completionDate = new Date(startDate);
     completionDate.setDate(completionDate.getDate() + totalDays);
 
-    // Milestone dates
     const pagesPerDay = pagesPerWeek / 7;
 
     function milestoneDate(pages) {
@@ -718,7 +931,6 @@
     const totalPgs = state.totalPages;
     const juz1Pages = totalPgs / 30;
 
-    // Display
     const months = (totalDays / 30.44).toFixed(1);
     const years = (totalDays / 365.25).toFixed(2);
 
@@ -729,7 +941,6 @@
     document.getElementById('r-completionDate').textContent = formatDate(completionDate);
     document.getElementById('r-hijriDate').textContent = toHijriApprox(completionDate);
 
-    // Milestones
     document.getElementById('m-juz1').textContent = milestoneDate(juz1Pages * 1);
     document.getElementById('m-juz5').textContent = milestoneDate(juz1Pages * 5);
     document.getElementById('m-juz10').textContent = milestoneDate(juz1Pages * 10);
@@ -738,7 +949,6 @@
     document.getElementById('m-juz25').textContent = milestoneDate(juz1Pages * 25);
     document.getElementById('m-juz30').textContent = milestoneDate(totalPgs);
 
-    // Show result
     const resultEl = document.getElementById('result');
     resultEl.classList.add('show');
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -753,7 +963,6 @@
   }
 
   function toHijriApprox(date) {
-    // Approximate conversion
     try {
       return date.toLocaleDateString('ar-SA-u-ca-islamic', {
         day: 'numeric',
@@ -761,7 +970,6 @@
         year: 'numeric'
       }) + ' (Hijri)';
     } catch(e) {
-      // Fallback approximate
       const jd = Math.floor(date.getTime() / 86400000) + 2440588;
       const l = jd - 1948440 + 10632;
       const n = Math.floor((l - 1) / 10631);
@@ -774,6 +982,41 @@
       const hijriMonths = ['Muharram','Safar','Rabi I','Rabi II','Jumada I','Jumada II','Rajab','Sha\'ban','Ramadan','Shawwal','Dhul-Qi\'dah','Dhul-Hijjah'];
       return `${day} ${hijriMonths[month-1] || ''} ${year} H`;
     }
+  }
+
+  // ========== LEAD CAPTURE FUNCTION ==========
+  function submitLead() {
+    const email = document.getElementById('leadEmail').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+
+    if (!email && !phone) {
+      alert('Please enter at least your email or phone number.');
+      return;
+    }
+
+    // Basic email validation
+    if (email && !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Store in localStorage (you can replace this with a real backend/API call)
+    const leads = JSON.parse(localStorage.getItem('hifzLeads') || '[]');
+    leads.push({
+      email: email,
+      phone: phone,
+      date: new Date().toISOString()
+    });
+    localStorage.setItem('hifzLeads', JSON.stringify(leads));
+
+    // Show success message
+    document.getElementById('leadSuccess').style.display = 'block';
+    document.getElementById('leadEmail').value = '';
+    document.getElementById('leadPhone').value = '';
+
+    console.log('Lead saved:', { email, phone });
+    // 👆 Replace this with your real backend API call e.g:
+    // fetch('https://yourapi.com/leads', { method: 'POST', body: JSON.stringify({email, phone}) })
   }
 </script>
 </body>
