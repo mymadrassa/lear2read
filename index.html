@@ -1211,5 +1211,254 @@
     }
   }
 </script>
+<!-- ===================== -->
+<!-- MY REVISION PROGRAMME -->
+<!-- ===================== -->
+<section id="revision-programme" style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: Arial, sans-serif;">
+  <h2 style="text-align:center; color:#2c5f2d;">📖 My Revision Programme</h2>
+  <p style="text-align:center; color:#555;">
+    Enter your memorisation progress below to generate today's revision plan.
+    <br><strong>Write down your portion on paper after viewing it — nothing is saved yet.</strong>
+  </p>
+
+  <!-- Hizb data table (verses only for display/reference) -->
+  <div style="background:#f9f9f9; border:1px solid #ddd; border-radius:10px; padding:20px; margin-bottom:20px;">
+    
+    <label style="font-weight:bold;">1) I have completed Hizb n°:</label><br>
+    <select id="hizbSelect" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+      <option value="0">-- None yet --</option>
+    </select>
+
+    <label style="font-weight:bold;">2) (Optional) Current Surah in progress:</label><br>
+    <select id="currentSurah" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+      <option value="">-- Not applicable --</option>
+    </select>
+
+    <label style="font-weight:bold;">Verse reached in this Surah:</label><br>
+    <input type="number" id="currentVerse" min="1" placeholder="e.g. 25" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+
+    <label style="font-weight:bold;">3) Which day of your revision cycle is today?</label><br>
+    <input type="number" id="cycleDay" min="1" placeholder="e.g. 1 (start of cycle)" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+
+    <label style="font-weight:bold;">4) How many pages have you memorised in the last 20 days (Recent Memorisation)?</label><br>
+    <input type="number" id="recentPages" min="0" max="5" placeholder="0 to 5 pages" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+
+    <label style="font-weight:bold;">5) Which day of the 20-day Recent Memorisation cycle is today?</label><br>
+    <input type="number" id="recentDay" min="1" max="20" placeholder="1 to 20" style="width:100%; padding:8px; margin:10px 0; border-radius:6px;">
+
+    <button onclick="generateProgramme()" style="width:100%; padding:12px; margin-top:15px; background:#2c5f2d; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
+      Generate My Programme
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div id="resultsBox" style="display:none; background:#eaf5ea; border:2px solid #2c5f2d; border-radius:10px; padding:20px;">
+    <h3 style="color:#2c5f2d;">📅 Today's Revision Plan</h3>
+    <div id="oldRevisionResult" style="margin-bottom:15px; padding:15px; background:white; border-radius:8px;"></div>
+    <div id="recentRevisionResult" style="padding:15px; background:white; border-radius:8px;"></div>
+  </div>
+</section>
+
+<script>
+// ============================
+// HIZB DATA (60 entries)
+// ============================
+const hizbData = [
+  {n:1, text:"Al-Fatiha 1 - Al-Baqara 74"},
+  {n:2, text:"Al-Baqara 75 - 141"},
+  {n:3, text:"Al-Baqara 142 - 202"},
+  {n:4, text:"Al-Baqara 203 - 252"},
+  {n:5, text:"Al-Baqara 253 - Al-'Imran 14"},
+  {n:6, text:"Al-'Imran 15 - 92"},
+  {n:7, text:"Al-'Imran 93 - 163"},
+  {n:8, text:"Al-'Imran 164 - An-Nisa 23"},
+  {n:9, text:"An-Nisa 23 - 87"},
+  {n:10, text:"An-Nisa 88 - 147"},
+  {n:11, text:"An-Nisa 148 - Al-Maida 26"},
+  {n:12, text:"Al-Maida 27 - 81"},
+  {n:13, text:"Al-Maida 82 - Al-An'am 29"},
+  {n:14, text:"Al-An'am 30 - 110"},
+  {n:15, text:"Al-An'am 111 - 165"},
+  {n:16, text:"Al-A'raf 1 - 84"},
+  {n:17, text:"Al-A'raf 85 - 170"},
+  {n:18, text:"Al-A'raf 171 - Al-Anfal 40"},
+  {n:19, text:"Al-Anfal 41 - At-Tawba 33"},
+  {n:20, text:"At-Tawba 34 - 89"},
+  {n:21, text:"At-Tawba 90 - Younas 25"},
+  {n:22, text:"Younas 26 - Hud 5"},
+  {n:23, text:"Hud 6 - 83"},
+  {n:24, text:"Hud 84 - Yousouf 52"},
+  {n:25, text:"Yousouf 53 - Ar-Ra'ad 18"},
+  {n:26, text:"Ar-Ra'ad 19 - Ibrahim 52"},
+  {n:27, text:"Al-Hijr 1 - An-Nahl 50"},
+  {n:28, text:"An-Nahl 51 - 128"},
+  {n:29, text:"Al-Isra 1 - 98"},
+  {n:30, text:"Al-Isra 99 - Al-Kahf 74"},
+  {n:31, text:"Al-Kahf 75 - Maryam 98"},
+  {n:32, text:"Taha 1 - 135"},
+  {n:33, text:"Al-Anbya 1 - 112"},
+  {n:34, text:"Al-Hajj 1 - 78"},
+  {n:35, text:"Al-Mouminoun 1 - An-Nour 20"},
+  {n:36, text:"An-Nour 21 - Al-Fourqan 20"},
+  {n:37, text:"Al-Fourqan 21 - Ach-Chou'ara 110"},
+  {n:38, text:"Ach-Chou'ara 111 - An-Naml 53"},
+  {n:39, text:"An-Naml 54 - Al-Qassas 50"},
+  {n:40, text:"Al-Qassas 51 - Al-'Ankabout 45"},
+  {n:41, text:"Al-'Ankabout 46 - Louqman 21"},
+  {n:42, text:"Louqman 22 - Al-Ahzab 30"},
+  {n:43, text:"Al-Ahzab 28 - Saba 23"},
+  {n:44, text:"Saba 24 - Yasin 27"},
+  {n:45, text:"Yasin 28 - As-Saffat 144"},
+  {n:46, text:"As-Saffat 145 - Az-Zoumar 31"},
+  {n:47, text:"Az-Zoumar 32 - Ghafir 40"},
+  {n:48, text:"Ghafir 41 - Foussilat 46"},
+  {n:49, text:"Foussilat 47 - Az-Zoukhrouf 23"},
+  {n:50, text:"Az-Zoukhrouf 24 - Al-Jathiya 37"},
+  {n:51, text:"Al-Ahqaf 1 - Al-Fath 17"},
+  {n:52, text:"Al-Fath 18 - Ad-Daryat 30"},
+  {n:53, text:"Ad-Daryat 31 - Al-Qamar 55"},
+  {n:54, text:"Ar-Rahman 1 - Al-Hadid 29"},
+  {n:55, text:"Al-Moujadalah 1 - As-Saff 14"},
+  {n:56, text:"Al-Joumou'a 1 - At-Tahrim 12"},
+  {n:57, text:"Al-Mulk 1 - Nouh 28"},
+  {n:58, text:"Al-Djinn 1 - Al-Moursalat 50"},
+  {n:59, text:"An-Naba 1 - At-Tariq 17"},
+  {n:60, text:"Al-A'la 1 - An-Nas 6"}
+];
+
+// Approx pages per Hizb (Quran has 604 pages / 60 Hizb ≈ 20 pages each)
+const PAGES_PER_HIZB = 20;
+
+// Simplified Surah list (name + total verses) for the "current Surah" dropdown
+const surahList = [
+  {name:"Al-Fatiha", verses:7},{name:"Al-Baqara", verses:286},{name:"Al-'Imran", verses:200},
+  {name:"An-Nisa", verses:176},{name:"Al-Maida", verses:120},{name:"Al-An'am", verses:165},
+  {name:"Al-A'raf", verses:206},{name:"Al-Anfal", verses:75},{name:"At-Tawba", verses:129},
+  {name:"Younas", verses:109},{name:"Hud", verses:123},{name:"Yousouf", verses:111},
+  {name:"Ar-Ra'ad", verses:43},{name:"Ibrahim", verses:52},{name:"Al-Hijr", verses:99},
+  {name:"An-Nahl", verses:128},{name:"Al-Isra", verses:111},{name:"Al-Kahf", verses:110},
+  {name:"Maryam", verses:98},{name:"Taha", verses:135},{name:"Al-Anbya", verses:112},
+  {name:"Al-Hajj", verses:78},{name:"Al-Mouminoun", verses:118},{name:"An-Nour", verses:64},
+  {name:"Al-Fourqan", verses:77},{name:"Ach-Chou'ara", verses:227},{name:"An-Naml", verses:93},
+  {name:"Al-Qassas", verses:88},{name:"Al-'Ankabout", verses:69},{name:"Louqman", verses:34},
+  {name:"Al-Ahzab", verses:73},{name:"Saba", verses:54},{name:"Yasin", verses:83},
+  {name:"As-Saffat", verses:182},{name:"Az-Zoumar", verses:75},{name:"Ghafir", verses:85},
+  {name:"Foussilat", verses:54},{name:"Az-Zoukhrouf", verses:89},{name:"Al-Jathiya", verses:37},
+  {name:"Al-Ahqaf", verses:35},{name:"Al-Fath", verses:29},{name:"Ad-Daryat", verses:60},
+  {name:"Al-Qamar", verses:55},{name:"Ar-Rahman", verses:78},{name:"Al-Hadid", verses:29},
+  {name:"Al-Moujadalah", verses:22},{name:"As-Saff", verses:14},{name:"Al-Joumou'a", verses:11},
+  {name:"At-Tahrim", verses:12},{name:"Al-Mulk", verses:30},{name:"Nouh", verses:28},
+  {name:"Al-Djinn", verses:28},{name:"Al-Moursalat", verses:50},{name:"An-Naba", verses:40},
+  {name:"At-Tariq", verses:17},{name:"Al-A'la", verses:19},{name:"An-Nas", verses:6}
+];
+
+// Populate dropdowns on load
+window.onload = function() {
+  const hizbSelect = document.getElementById('hizbSelect');
+  hizbData.forEach(h => {
+    const opt = document.createElement('option');
+    opt.value = h.n;
+    opt.textContent = `Hizb ${h.n} — ${h.text}`;
+    hizbSelect.appendChild(opt);
+  });
+
+  const surahSelect = document.getElementById('currentSurah');
+  surahList.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.verses;
+    opt.textContent = s.name;
+    surahSelect.appendChild(opt);
+  });
+};
+
+// ============================
+// MAIN LOGIC
+// ============================
+function generateProgramme() {
+  const hizbCompleted = parseInt(document.getElementById('hizbSelect').value) || 0;
+  const surahTotalVerses = parseInt(document.getElementById('currentSurah').value) || 0;
+  const currentVerse = parseInt(document.getElementById('currentVerse').value) || 0;
+  const cycleDay = parseInt(document.getElementById('cycleDay').value) || 1;
+  const recentPages = parseInt(document.getElementById('recentPages').value) || 0;
+  const recentDay = parseInt(document.getElementById('recentDay').value) || 1;
+
+  // --- Estimate total pages memorised ---
+  let totalPages = hizbCompleted * PAGES_PER_HIZB;
+
+  if (surahTotalVerses > 0 && currentVerse > 0) {
+    // Rough estimate: partial surah progress adds a fraction of a Hizb's worth of pages
+    const fraction = Math.min(currentVerse / surahTotalVerses, 1);
+    totalPages += fraction * PAGES_PER_HIZB; // rough approximation
+  }
+
+  totalPages = Math.max(0, Math.round(totalPages));
+
+  // --- OLD REVISION LOGIC ---
+  let oldRevisionHTML = "";
+  if (totalPages === 0) {
+    oldRevisionHTML = "<p>You haven't entered any memorised Hizb yet. Please select at least one Hizb or a Surah in progress.</p>";
+  } else {
+    let cycleLength, revisionDays;
+    if (totalPages >= PAGES_PER_HIZB) {
+      cycleLength = 7;
+      revisionDays = 6;
+    } else {
+      cycleLength = 4;
+      revisionDays = 3;
+    }
+
+    const dayInCycle = ((cycleDay - 1) % cycleLength) + 1;
+
+    if (dayInCycle > revisionDays) {
+      oldRevisionHTML = `
+        <strong>🕌 Old Revision — Day ${dayInCycle} of ${cycleLength}</strong><br>
+        <span style="color:#2c5f2d; font-weight:bold;">Today is your REST day!</span> No old revision today.
+      `;
+    } else {
+      const pagesPerDay = totalPages / revisionDays;
+      const startPage = Math.round((dayInCycle - 1) * pagesPerDay) + 1;
+      const endPage = Math.round(dayInCycle * pagesPerDay);
+
+      oldRevisionHTML = `
+        <strong>🕌 Old Revision — Day ${dayInCycle} of ${cycleLength}</strong><br>
+        Total memorised: ~${totalPages} pages<br>
+        <span style="color:#2c5f2d; font-weight:bold;">
+          Today's portion: approx. pages ${startPage} to ${endPage} of your memorised portion
+        </span><br>
+        <small>(Recite from memory only — no Mushaf!)</small>
+      `;
+    }
+  }
+
+  // --- RECENT MEMORISATION LOGIC ---
+  let recentHTML = "";
+  if (recentPages === 0) {
+    recentHTML = "<p>No recent pages entered. If you've memorised new pages recently, enter them above.</p>";
+  } else if (recentDay > 20) {
+    recentHTML = `
+      <strong>🆕 Recent Memorisation — Day ${recentDay}</strong><br>
+      <span style="color:#b8860b; font-weight:bold;">
+        These ${recentPages} pages have completed their 20-day cycle!
+        Please move them into your Old Revision Hizb count.
+      </span>
+    `;
+  } else {
+    recentHTML = `
+      <strong>🆕 Recent Memorisation — Day ${recentDay} of 20</strong><br>
+      <span style="color:#b8860b; font-weight:bold;">
+        Revise your last ${recentPages} memorised page(s) TODAY (no day off).
+      </span><br>
+      <small>${20 - recentDay} day(s) remaining before this moves to Old Revision.</small>
+    `;
+  }
+
+  document.getElementById('oldRevisionResult').innerHTML = oldRevisionHTML;
+  document.getElementById('recentRevisionResult').innerHTML = recentHTML;
+  document.getElementById('resultsBox').style.display = 'block';
+
+  // Scroll to results
+  document.getElementById('resultsBox').scrollIntoView({behavior: 'smooth'});
+}
+</script>
 </body>
 </html>
