@@ -1226,6 +1226,10 @@
 
   <div style="background: rgba(255,255,255,0.07); padding:25px; border-radius:12px; margin-bottom:25px; border: 1px solid rgba(255,255,255,0.1);">
 
+    <h3 style="color:#4facfe; margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom:10px;">
+      📌 Old Revision
+    </h3>
+
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
       ✅ Hizb completed (from the beginning):
     </label>
@@ -1417,26 +1421,30 @@
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
       Verse reached in this Surah (optional):
     </label>
-    <input type="number" id="currentVerse" min="1" placeholder="e.g. 50" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
+    <input type="number" id="currentVerse" min="1" placeholder="e.g. 50" style="width:100%; padding:10px; margin-bottom:0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
 
-    <hr style="margin:25px 0; border-color: rgba(255,255,255,0.15);">
+    <hr style="margin:30px 0; border-color: rgba(255,255,255,0.15);">
+
+    <h3 style="color:#a855f7; margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom:10px;">
+      🆕 Recent Memorisation
+    </h3>
 
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
-      🆕 Recent Memorisation — Which 5 pages did you memorise by hand?
+      What page number did you stop at?
     </label>
-    <input type="text" id="recentPagesInput" placeholder="e.g. pages 45-50 or Al-Baqara 100-120" style="width:100%; padding:10px; margin-bottom:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
-    <small style="color:#a0a0c0;">Write the exact reference of the 5 pages you just finished memorising by hand (not from a book).</small>
+    <input type="number" id="lastPageInput" min="1" max="604" placeholder="e.g. 55" style="width:100%; padding:10px; margin-bottom:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
+    <small style="color:#a0a0c0;">Enter the last page number you just memorised by hand. We'll calculate your last 5 pages automatically.</small>
 
-    <button onclick="generateProgramme()" style="width:100%; padding:14px; margin-top:20px; background: linear-gradient(90deg, #4facfe, #a855f7); color:white; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(168,85,247,0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+    <button onclick="generateProgramme()" style="width:100%; padding:14px; margin-top:25px; background: linear-gradient(90deg, #4facfe, #a855f7); color:white; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(168,85,247,0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
       🔄 Generate My Programme Today
     </button>
   </div>
 
   <div id="resultsBox" style="display:none; background: rgba(255,255,255,0.07); padding:25px; border-radius:12px; border: 1px solid rgba(255,255,255,0.1);">
-    <h3 style="color:#4facfe; margin-bottom:15px;">📌 Old Revision (Memorised without Mushaf)</h3>
+    <h3 style="color:#4facfe; margin-bottom:15px;">📌 Old Revision Plan</h3>
     <div id="oldRevisionResult" style="margin-bottom:25px; color:#e0e0f0; line-height:1.6;"></div>
 
-    <h3 style="color:#a855f7; margin-bottom:15px;">📌 Recent Memorisation (Last 5 pages — daily rota)</h3>
+    <h3 style="color:#a855f7; margin-bottom:15px;">📌 Recent Memorisation Plan</h3>
     <div id="recentRevisionResult" style="color:#e0e0f0; line-height:1.6;"></div>
   </div>
 </section>
@@ -1445,44 +1453,61 @@
 const PAGES_PER_HIZB = 10; // Mushaf Madinah standard approximation
 
 function generateProgramme() {
-  const hizbCompleted = parseInt(document.getElementById('hizbCompleted').value);
-  const recentPagesRef = document.getElementById('recentPagesInput').value.trim();
+  const hizbCompleted = parseInt(document.getElementById('hizbCompleted').value) || 0;
+  const currentSurahSelect = document.getElementById('currentSurah');
+  const currentSurahText = currentSurahSelect.options[currentSurahSelect.selectedIndex].text;
+  const currentVerse = document.getElementById('currentVerse').value;
+  const lastPage = parseInt(document.getElementById('lastPageInput').value);
 
   const totalOldPages = hizbCompleted * PAGES_PER_HIZB;
 
   // --- OLD REVISION LOGIC ---
   let oldRevisionHTML = "";
 
-  if (totalOldPages === 0) {
+  if (totalOldPages === 0 && !currentSurahSelect.value) {
     oldRevisionHTML = "<p>No completed Hizb yet. Start memorising to build your Old Revision!</p>";
   } else {
     const isFullCycle = totalOldPages >= PAGES_PER_HIZB;
     const cycleLength = isFullCycle ? 7 : 4;
     const revisionDays = isFullCycle ? 6 : 3;
-    const dailyPortion = (totalOldPages / revisionDays).toFixed(1);
+    const dailyPortion = totalOldPages > 0 ? (totalOldPages / revisionDays).toFixed(1) : 0;
+
+    let progressLine = "";
+    if (currentSurahSelect.value) {
+      progressLine = `<p><strong>Currently memorising:</strong> ${currentSurahText}${currentVerse ? ' — up to verse ' + currentVerse : ''}</p>`;
+    }
 
     oldRevisionHTML = `
-      <p><strong>Total memorised:</strong> ${totalOldPages} pages (${hizbCompleted} Hizb)</p>
+      <p><strong>Total memorised (Old Revision):</strong> ${totalOldPages} pages (${hizbCompleted} Hizb completed)</p>
+      ${progressLine}
+      ${totalOldPages > 0 ? `
       <p><strong>Cycle type:</strong> ${cycleLength}-day cycle (${revisionDays} revision days + 1 rest day)</p>
       <p><strong>Daily portion:</strong> approx. <span style="color:#4facfe; font-weight:bold;">${dailyPortion} pages per day</span></p>
       <p style="background:rgba(255,255,255,0.08); padding:15px; border-radius:8px; margin-top:15px;">
         📖 <strong>Today's task:</strong> Recite ${dailyPortion} pages from memory (no Mushaf).<br>
         Rotate through your full memorised portion (${totalOldPages} pages) across ${revisionDays} days, then take 1 day off, then restart the cycle.
-      </p>
+      </p>` : ''}
     `;
   }
 
-  // --- RECENT MEMORISATION LOGIC (daily rota, no day off) ---
+  // --- RECENT MEMORISATION LOGIC ---
   let recentHTML = "";
-  if (!recentPagesRef) {
-    recentHTML = `<p>Please enter the 5 pages you just memorised by hand to generate your daily rota.</p>`;
+  if (!lastPage || lastPage < 1) {
+    recentHTML = `<p>Please enter the page number you just stopped at to generate your 5-page rota.</p>`;
   } else {
+    const startPage = Math.max(1, lastPage - 4);
+    const pagesList = [];
+    for (let p = startPage; p <= lastPage; p++) {
+      pagesList.push(p);
+    }
     recentHTML = `
-      <p><strong>Your last 5 pages memorised:</strong> <span style="color:#a855f7; font-weight:bold;">${recentPagesRef}</span></p>
+      <p><strong>Last page memorised:</strong> <span style="color:#a855f7; font-weight:bold;">Page ${lastPage}</span></p>
+      <p><strong>Pages to revise:</strong> <span style="color:#a855f7; font-weight:bold;">Page ${pagesList.join(', ')}</span></p>
       <p style="background:rgba(255,255,255,0.08); padding:15px; border-radius:8px; margin-top:15px;">
-        📗 <strong>Today's task:</strong> Revise these 5 pages (<em>${recentPagesRef}</em>) entirely from memory, every single day — <strong>no day off</strong> — until you add new pages and move these into your Old Revision.
+        📗 <strong>Today's task:</strong> Revise pages <strong>${startPage} to ${lastPage}</strong> entirely from memory.<br>
+        Repeat this every day, then take <strong>1 day off</strong>, then restart the cycle — until you memorise new pages.
       </p>
-      <p><small style="color:#a0a0c0;">Once you memorise your next portion, replace this reference with the new 5 pages, and consider merging the older ones into your Old Revision Hizb count above.</small></p>
+      <p><small style="color:#a0a0c0;">Once you memorise more pages, update the page number above to shift your rota forward.</small></p>
     `;
   }
 
