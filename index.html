@@ -1229,19 +1229,190 @@
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
       ✅ Hizb completed (from the beginning):
     </label>
-    <select id="hizbCompleted" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
+    <select id="hizbCompleted" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:14px;">
       <option value="0">0 - None yet</option>
-      <script>
-        for (let i = 1; i <= 60; i++) {
-          document.write(`<option value="${i}">${i}</option>`);
-        }
-      </script>
+      <option value="1">1 - Al-Fatiha 1 - Al-Baqara 74</option>
+      <option value="2">2 - Al-Baqara 75 - 141</option>
+      <option value="3">3 - Al-Baqara 142 - 202</option>
+      <option value="4">4 - Al-Baqara 203 - 252</option>
+      <option value="5">5 - Al-Baqara 253 - Al-'Imran 14</option>
+      <option value="6">6 - Al-'Imran 15 - 92</option>
+      <option value="7">7 - Al-'Imran 93 - 163</option>
+      <option value="8">8 - Al-'Imran 164 - An-Nisa 23</option>
+      <option value="9">9 - An-Nisa 23 - 87</option>
+      <option value="10">10 - An-Nisa 88 - 147</option>
+      <option value="11">11 - An-Nisa 148 - Al-Maida 26</option>
+      <option value="12">12 - Al-Maida 27 - 81</option>
+      <option value="13">13 - Al-Maida 82 - Al-An'am 29</option>
+      <option value="14">14 - Al-An'am 30 - 110</option>
+      <option value="15">15 - Al-An'am 111 - 165</option>
+      <option value="16">16 - Al-A'raf 1 - 84</option>
+      <option value="17">17 - Al-A'raf 85 - 170</option>
+      <option value="18">18 - Al-A'raf 171 - Al-Anfal 40</option>
+      <option value="19">19 - Al-Anfal 41 - At-Tawba 33</option>
+      <option value="20">20 - At-Tawba 34 - 89</option>
+      <option value="21">21 - At-Tawba 90 - Younas 25</option>
+      <option value="22">22 - Younas 26 - Hud 5</option>
+      <option value="23">23 - Hud 6 - 83</option>
+      <option value="24">24 - Hud 84 - Yousouf 52</option>
+      <option value="25">25 - Yousouf 53 - Ar-Ra'ad 18</option>
+      <option value="26">26 - Ar-Ra'ad 19 - Ibrahim 52</option>
+      <option value="27">27 - Al-Hijr 1 - An-Nahl 50</option>
+      <option value="28">28 - An-Nahl 51 - 128</option>
+      <option value="29">29 - Al-Isra 1 - 98</option>
+      <option value="30">30 - Al-Isra 99 - Al-Kahf 74</option>
+      <option value="31">31 - Al-Kahf 75 - Maryam 98</option>
+      <option value="32">32 - Taha 1 - 135</option>
+      <option value="33">33 - Al-Anbya 1 - 112</option>
+      <option value="34">34 - Al-Hajj 1 - 78</option>
+      <option value="35">35 - Al-Mouminoun 1 - An-Nour 20</option>
+      <option value="36">36 - An-Nour 21 - Al-Fourqan 20</option>
+      <option value="37">37 - Al-Fourqan 21 - Ach-Chou'ara 110</option>
+      <option value="38">38 - Ach-Chou'ara 111 - An-Naml 53</option>
+      <option value="39">39 - An-Naml 54 - Al-Qassas 50</option>
+      <option value="40">40 - Al-Qassas 51 - Al-'Ankabout 45</option>
+      <option value="41">41 - Al-'Ankabout 46 - Louqman 21</option>
+      <option value="42">42 - Louqman 22 - Al-Ahzab 30</option>
+      <option value="43">43 - Al-Ahzab 28 - Saba 23</option>
+      <option value="44">44 - Saba 24 - Yasin 27</option>
+      <option value="45">45 - Yasin 28 - As-Saffat 144</option>
+      <option value="46">46 - As-Saffat 145 - Az-Zoumar 31</option>
+      <option value="47">47 - Az-Zoumar 32 - Ghafir 40</option>
+      <option value="48">48 - Ghafir 41 - Foussilat 46</option>
+      <option value="49">49 - Foussilat 47 - Az-Zoukhrouf 23</option>
+      <option value="50">50 - Az-Zoukhrouf 24 - Al-Jathiya 37</option>
+      <option value="51">51 - Al-Ahqaf 1 - Al-Fath 17</option>
+      <option value="52">52 - Al-Fath 18 - Ad-Daryat 30</option>
+      <option value="53">53 - Ad-Daryat 31 - Al-Qamar 55</option>
+      <option value="54">54 - Ar-Rahman 1 - Al-Hadid 29</option>
+      <option value="55">55 - Al-Moujadalah 1 - As-Saff 14</option>
+      <option value="56">56 - Al-Joumou'a 1 - At-Tahrim 12</option>
+      <option value="57">57 - Al-Mulk 1 - Nouh 28</option>
+      <option value="58">58 - Al-Djinn 1 - Al-Moursalat 50</option>
+      <option value="59">59 - An-Naba 1 - At-Tariq 17</option>
+      <option value="60">60 - Al-A'la 1 - An-Nas 6</option>
     </select>
 
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
       📗 Currently memorising (optional) — Surah name:
     </label>
-    <input type="text" id="currentSurah" placeholder="e.g. Al-Baqara" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
+    <select id="currentSurah" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:14px;">
+      <option value="">-- Not applicable --</option>
+      <option value="1">1 - Al-Fatiha (The Opener)</option>
+      <option value="2">2 - Al-Baqarah (The Cow)</option>
+      <option value="3">3 - Al-Imran (Family of Imran)</option>
+      <option value="4">4 - An-Nisa (The Women)</option>
+      <option value="5">5 - Al-Ma'idah (The Table Spread)</option>
+      <option value="6">6 - Al-Anam (The Cattle)</option>
+      <option value="7">7 - Al-A'raf (The Heights)</option>
+      <option value="8">8 - Al-Anfal (The Spoils of War)</option>
+      <option value="9">9 - At-Taubah (The Repentance)</option>
+      <option value="10">10 - Yunus (Jonah)</option>
+      <option value="11">11 - Hud (Hud)</option>
+      <option value="12">12 - Yusuf (Joseph)</option>
+      <option value="13">13 - Ar-Ra'd (Thunder)</option>
+      <option value="14">14 - Ibrahim (Abraham)</option>
+      <option value="15">15 - Al-Hijr (The Stoneland)</option>
+      <option value="16">16 - An-Nahl (The Bee)</option>
+      <option value="17">17 - Al-Isra (The Night Journey)</option>
+      <option value="18">18 - Al-Kahf (The Cave)</option>
+      <option value="19">19 - Maryam (Mary)</option>
+      <option value="20">20 - Ta-Ha (Ta-Ha)</option>
+      <option value="21">21 - Al-Anbiya (The Prophets)</option>
+      <option value="22">22 - Al-Hajj (The Pilgrimage)</option>
+      <option value="23">23 - Al-Mu'minun (The Believers)</option>
+      <option value="24">24 - An-Nur (The Light)</option>
+      <option value="25">25 - Al-Furqan (The Criterion)</option>
+      <option value="26">26 - Ash-Shu'ara (The Poets)</option>
+      <option value="27">27 - An-Naml (The Ants)</option>
+      <option value="28">28 - Al-Qasas (The Story)</option>
+      <option value="29">29 - Al-Ankabut (Spider)</option>
+      <option value="30">30 - Ar-Rum (The Romans)</option>
+      <option value="31">31 - Luqman (Luqman)</option>
+      <option value="32">32 - As-Sajdah (Prostration)</option>
+      <option value="33">33 - Al-Ahzab (The Confederates)</option>
+      <option value="34">34 - Saba (Sheba)</option>
+      <option value="35">35 - Fatir (The Originator)</option>
+      <option value="36">36 - Ya-Sin (Ya Sin)</option>
+      <option value="37">37 - As-Saffat (Those Who Set the Ranks)</option>
+      <option value="38">38 - Sad (The Letter Saad)</option>
+      <option value="39">39 - Az-Zumar (The Troops)</option>
+      <option value="40">40 - Ghafir (The Forgiver)</option>
+      <option value="41">41 - Fussilat (Explained in Detail)</option>
+      <option value="42">42 - Ash-Shura (The Consultation)</option>
+      <option value="43">43 - Az-Zukhruf (The Ornaments of Gold)</option>
+      <option value="44">44 - Ad-Dukhan (The Smoke)</option>
+      <option value="45">45 - Al-Jathiyah (The Crouching)</option>
+      <option value="46">46 - Al-Ahqaf (The Wind Curved Sandhill)</option>
+      <option value="47">47 - Muhammad (Muhammad)</option>
+      <option value="48">48 - Al-Fath (The Victory)</option>
+      <option value="49">49 - Al-Hujurat (The Private Chambers)</option>
+      <option value="50">50 - Qaf (Qaf)</option>
+      <option value="51">51 - Adh-Dhariyat (The Scatterers)</option>
+      <option value="52">52 - At-Tur (The Mountain)</option>
+      <option value="53">53 - An-Najm (The Star)</option>
+      <option value="54">54 - Al-Qamar (The Moon)</option>
+      <option value="55">55 - Ar-Rahman (The Beneficent)</option>
+      <option value="56">56 - Al-Waqi'ah (The Inevitable)</option>
+      <option value="57">57 - Al-Hadid (The Iron)</option>
+      <option value="58">58 - Al-Mujadila (The Pleading Women)</option>
+      <option value="59">59 - Al-Hashr (The Exile)</option>
+      <option value="60">60 - Al-Mumtahanah (She That is to be Examined)</option>
+      <option value="61">61 - As-Saff (The Ranks)</option>
+      <option value="62">62 - Al-Jumu'ah (Congregation Prayer)</option>
+      <option value="63">63 - Al-Munafiqun (The Hypocrites)</option>
+      <option value="64">64 - At-Taghabun (Mutual Disposession)</option>
+      <option value="65">65 - At-Talaq (The Divorce)</option>
+      <option value="66">66 - At-Tahrim (The Prohibition)</option>
+      <option value="67">67 - Al-Mulk (The Sovereignty)</option>
+      <option value="68">68 - Al-Qalam (The Pen)</option>
+      <option value="69">69 - Al-Haqqah (The Reality)</option>
+      <option value="70">70 - Al-Ma'arij (The Ascending Stairways)</option>
+      <option value="71">71 - Nuh (Noah)</option>
+      <option value="72">72 - Al-Jinn (The Jinn)</option>
+      <option value="73">73 - Al-Muzzammil (The Enshrouded One)</option>
+      <option value="74">74 - Al-Muddaththir (The Cloaked One)</option>
+      <option value="75">75 - Al-Qiyamah (The Resurrection)</option>
+      <option value="76">76 - Al-Insan (The Man)</option>
+      <option value="77">77 - Al-Mursalat (The Emissaries)</option>
+      <option value="78">78 - An-Naba (The Tidings)</option>
+      <option value="79">79 - An-Nazi'at (Those Who Drag Forth)</option>
+      <option value="80">80 - Abasa (He Frowned)</option>
+      <option value="81">81 - At-Takwir (The Overthrowing)</option>
+      <option value="82">82 - Al-Infitar (The Cleaving)</option>
+      <option value="83">83 - Al-Mutaffifin (The Defrauding)</option>
+      <option value="84">84 - Al-Inshiqaq (The Sundering)</option>
+      <option value="85">85 - Al-Buruj (The Mansions of the Stars)</option>
+      <option value="86">86 - At-Tariq (The Nightcommer)</option>
+      <option value="87">87 - Al-Ala (The Most High)</option>
+      <option value="88">88 - Al-Ghashiyah (The Overwhelming)</option>
+      <option value="89">89 - Al-Fajr (The Dawn)</option>
+      <option value="90">90 - Al-Balad (The City)</option>
+      <option value="91">91 - Ash-Shams (The Sun)</option>
+      <option value="92">92 - Al-Lail (The Night)</option>
+      <option value="93">93 - Ad-Duha (The Morning Brightness)</option>
+      <option value="94">94 - Ash-Sharh (The Expansion)</option>
+      <option value="95">95 - At-Tin (The Fig)</option>
+      <option value="96">96 - Al-Alaq (The Blood Clot)</option>
+      <option value="97">97 - Al-Qadr (The Power)</option>
+      <option value="98">98 - Al-Bayyina (The Evidence)</option>
+      <option value="99">99 - Az-Zalzalah (The Earthquake)</option>
+      <option value="100">100 - Al-Adiyat (The Courser)</option>
+      <option value="101">101 - Al-Qari'ah (The Calamity)</option>
+      <option value="102">102 - At-Takathur (Vying for Increase)</option>
+      <option value="103">103 - Al-Asr (The Declining Day)</option>
+      <option value="104">104 - Al-Humazah (The Slanderer)</option>
+      <option value="105">105 - Al-Fil (The Elephant)</option>
+      <option value="106">106 - Quraysh (Quraish)</option>
+      <option value="107">107 - Al-Ma'un (The Small Kindness)</option>
+      <option value="108">108 - Al-Kawthar (The Abundance)</option>
+      <option value="109">109 - Al-Kafirun (The Disbelievers)</option>
+      <option value="110">110 - An-Nasr (The Divine Support)</option>
+      <option value="111">111 - Al-Masad (The Palm Fiber)</option>
+      <option value="112">112 - Al-Ikhlas (The Sincerity)</option>
+      <option value="113">113 - Al-Falaq (The Daybreak)</option>
+      <option value="114">114 - An-Nas (The Mankind)</option>
+    </select>
 
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
       Verse reached in this Surah (optional):
@@ -1251,10 +1422,10 @@
     <hr style="margin:25px 0; border-color: rgba(255,255,255,0.15);">
 
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">
-      🆕 Recent Memorisation — Which day are you on? (Day 1 to 20)
+      🆕 Recent Memorisation — Which 5 pages did you memorise by hand?
     </label>
-    <input type="number" id="recentDayInput" min="1" max="20" value="1" style="width:100%; padding:10px; margin-bottom:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
-    <small style="color:#a0a0c0;">Day 1 = the first day you finished memorising your last 5 pages.</small>
+    <input type="text" id="recentPagesInput" placeholder="e.g. pages 45-50 or Al-Baqara 100-120" style="width:100%; padding:10px; margin-bottom:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.9); color:#222; font-size:15px;">
+    <small style="color:#a0a0c0;">Write the exact reference of the 5 pages you just finished memorising by hand (not from a book).</small>
 
     <button onclick="generateProgramme()" style="width:100%; padding:14px; margin-top:20px; background: linear-gradient(90deg, #4facfe, #a855f7); color:white; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(168,85,247,0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
       🔄 Generate My Programme Today
@@ -1265,7 +1436,7 @@
     <h3 style="color:#4facfe; margin-bottom:15px;">📌 Old Revision (Memorised without Mushaf)</h3>
     <div id="oldRevisionResult" style="margin-bottom:25px; color:#e0e0f0; line-height:1.6;"></div>
 
-    <h3 style="color:#a855f7; margin-bottom:15px;">📌 Recent Memorisation (Last 5 pages)</h3>
+    <h3 style="color:#a855f7; margin-bottom:15px;">📌 Recent Memorisation (Last 5 pages — daily rota)</h3>
     <div id="recentRevisionResult" style="color:#e0e0f0; line-height:1.6;"></div>
   </div>
 </section>
@@ -1275,11 +1446,11 @@ const PAGES_PER_HIZB = 10; // Mushaf Madinah standard approximation
 
 function generateProgramme() {
   const hizbCompleted = parseInt(document.getElementById('hizbCompleted').value);
-  const recentDay = parseInt(document.getElementById('recentDayInput').value) || 1;
-  const recentPages = 5;
+  const recentPagesRef = document.getElementById('recentPagesInput').value.trim();
 
   const totalOldPages = hizbCompleted * PAGES_PER_HIZB;
 
+  // --- OLD REVISION LOGIC ---
   let oldRevisionHTML = "";
 
   if (totalOldPages === 0) {
@@ -1301,21 +1472,17 @@ function generateProgramme() {
     `;
   }
 
+  // --- RECENT MEMORISATION LOGIC (daily rota, no day off) ---
   let recentHTML = "";
-  if (recentDay > 20) {
-    recentHTML = `
-      <p style="color:#a855f7; font-weight:bold;">
-        🎉 Your last ${recentPages} pages have completed the 20-day cycle!
-        Please add them to your Old Revision Hizb count above next time.
-      </p>
-    `;
+  if (!recentPagesRef) {
+    recentHTML = `<p>Please enter the 5 pages you just memorised by hand to generate your daily rota.</p>`;
   } else {
     recentHTML = `
-      <p><strong>Day ${recentDay} of 20</strong></p>
+      <p><strong>Your last 5 pages memorised:</strong> <span style="color:#a855f7; font-weight:bold;">${recentPagesRef}</span></p>
       <p style="background:rgba(255,255,255,0.08); padding:15px; border-radius:8px; margin-top:15px;">
-        📗 <strong>Today's task:</strong> Revise your last <strong>${recentPages} pages</strong> (no day off, every day).
+        📗 <strong>Today's task:</strong> Revise these 5 pages (<em>${recentPagesRef}</em>) entirely from memory, every single day — <strong>no day off</strong> — until you add new pages and move these into your Old Revision.
       </p>
-      <p><small style="color:#a0a0c0;">${20 - recentDay} day(s) remaining before these pages move into Old Revision.</small></p>
+      <p><small style="color:#a0a0c0;">Once you memorise your next portion, replace this reference with the new 5 pages, and consider merging the older ones into your Old Revision Hizb count above.</small></p>
     `;
   }
 
