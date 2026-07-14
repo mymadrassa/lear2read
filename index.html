@@ -1220,7 +1220,7 @@
     📖 My Revision Programme
   </h2>
   <p style="text-align:center; color:#c0c0d0; margin-bottom:30px;">
-    Fill in your progress to generate your weekly revision calendar.
+    Fill in your progress to generate your weekly revision plan.
   </p>
 
   <div style="background: rgba(255,255,255,0.07); padding:25px; border-radius:12px; margin-bottom:25px;">
@@ -1228,12 +1228,35 @@
     <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">👤 Student name:</label>
     <input type="text" id="studentName" placeholder="Ex: Ahmed" style="width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1); color:white; margin-bottom:20px;">
 
-    <h3 style="color:#4facfe; margin-bottom:15px;">📌 Old Revision (completed Hizb)</h3>
+    <h3 style="color:#4facfe; margin-bottom:15px;">📌 Old Revision — What you know from memory</h3>
 
-    <label style="display:block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">✅ Completed Hizb — From:</label>
-    <select id="hizbFrom" style="width:48%; padding:10px; border-radius:8px; margin-right:4%; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);"></select>
-    <label style="display:inline-block; margin-bottom:8px; font-weight:600; color:#e0e0f0;">to:</label>
-    <select id="hizbTo" style="width:48%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);"></select>
+    <p style="color:#c0c0d0; margin-bottom:15px; font-size:14px;">
+      Select where your memorised (old) portion starts and ends.
+    </p>
+
+    <div style="display:flex; gap:15px; margin-bottom:15px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:250px;">
+        <label style="display:block; margin-bottom:6px; font-weight:600; color:#e0e0f0;">From — Surah:</label>
+        <select id="fromSurah" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);"></select>
+      </div>
+      <div style="width:120px;">
+        <label style="display:block; margin-bottom:6px; font-weight:600; color:#e0e0f0;">Verse:</label>
+        <input type="number" id="fromVerse" min="1" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);">
+      </div>
+    </div>
+
+    <div style="display:flex; gap:15px; margin-bottom:10px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:250px;">
+        <label style="display:block; margin-bottom:6px; font-weight:600; color:#e0e0f0;">To — Surah:</label>
+        <select id="toSurah" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);"></select>
+      </div>
+      <div style="width:120px;">
+        <label style="display:block; margin-bottom:6px; font-weight:600; color:#e0e0f0;">Verse:</label>
+        <input type="number" id="toVerse" min="1" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);">
+      </div>
+    </div>
+
+    <p id="verseError" style="color:#ff6b6b; font-size:13px; display:none; margin-bottom:10px;"></p>
 
     <label style="display:block; margin:20px 0 8px; font-weight:600; color:#e0e0f0;">📗 Currently memorising (optional) — Surah name:</label>
     <select id="currentSurah" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);">
@@ -1256,7 +1279,7 @@
     </select>
 
     <button onclick="generateCalendar()" style="margin-top:25px; width:100%; padding:14px; background: linear-gradient(90deg, #4facfe, #a855f7); border:none; border-radius:10px; color:white; font-weight:bold; font-size:16px; cursor:pointer;">
-      🗓️ Generate my calendar
+      🗓️ Generate my revision plan
     </button>
   </div>
 
@@ -1281,7 +1304,7 @@
     </div>
 
     <button onclick="window.print()" style="margin-top:20px; width:100%; padding:14px; background:#22c55e; border:none; border-radius:10px; color:white; font-weight:bold; font-size:16px; cursor:pointer;">
-      🖨️ Print calendar
+      🖨️ Print plan
     </button>
   </div>
 
@@ -1296,142 +1319,215 @@
 </style>
 
 <script>
-const hizbData = [
-  {n:1, from:"Al-Fatiha 1", to:"Al-Baqara 74", pageStart:1, pageEnd:10},
-  {n:2, from:"Al-Baqara 75", to:"Al-Baqara 141", pageStart:11, pageEnd:20},
-  {n:3, from:"Al-Baqara 142", to:"Al-Baqara 202", pageStart:21, pageEnd:30},
-  {n:4, from:"Al-Baqara 203", to:"Al-Baqara 252", pageStart:31, pageEnd:40},
-  {n:5, from:"Al-Baqara 253", to:"Al-'Imran 14", pageStart:41, pageEnd:50},
-  {n:6, from:"Al-'Imran 15", to:"Al-'Imran 92", pageStart:51, pageEnd:60},
-  {n:7, from:"Al-'Imran 93", to:"Al-'Imran 163", pageStart:61, pageEnd:70},
-  {n:8, from:"Al-'Imran 164", to:"An-Nisa 23", pageStart:71, pageEnd:80},
-  {n:9, from:"An-Nisa 23", to:"An-Nisa 87", pageStart:81, pageEnd:90},
-  {n:10, from:"An-Nisa 88", to:"An-Nisa 147", pageStart:91, pageEnd:100},
-  {n:11, from:"An-Nisa 148", to:"Al-Maida 26", pageStart:101, pageEnd:110},
-  {n:12, from:"Al-Maida 27", to:"Al-Maida 81", pageStart:111, pageEnd:120},
-  {n:13, from:"Al-Maida 82", to:"Al-An'am 29", pageStart:121, pageEnd:130},
-  {n:14, from:"Al-An'am 30", to:"Al-An'am 110", pageStart:131, pageEnd:140},
-  {n:15, from:"Al-An'am 111", to:"Al-An'am 165", pageStart:141, pageEnd:150},
-  {n:16, from:"Al-A'raf 1", to:"Al-A'raf 84", pageStart:151, pageEnd:160},
-  {n:17, from:"Al-A'raf 85", to:"Al-A'raf 172", pageStart:161, pageEnd:170},
-  {n:18, from:"Al-A'raf 173", to:"Al-Anfal 40", pageStart:171, pageEnd:180},
-  {n:19, from:"Al-Anfal 41", to:"At-Tawba 33", pageStart:181, pageEnd:190},
-  {n:20, from:"At-Tawba 34", to:"At-Tawba 92", pageStart:191, pageEnd:200},
-  {n:21, from:"At-Tawba 93", to:"Yunus 25", pageStart:201, pageEnd:210},
-  {n:22, from:"Yunus 26", to:"Yunus 109", pageStart:211, pageEnd:220},
-  {n:23, from:"Hud 1", to:"Hud 83", pageStart:221, pageEnd:230},
-  {n:24, from:"Hud 84", to:"Yusuf 52", pageStart:231, pageEnd:240},
-  {n:25, from:"Yusuf 53", to:"Ibrahim 52", pageStart:241, pageEnd:250},
-  {n:26, from:"Al-Hijr 1", to:"An-Nahl 128", pageStart:251, pageEnd:260},
-  {n:27, from:"Al-Isra 1", to:"Al-Isra 98", pageStart:261, pageEnd:270},
-  {n:28, from:"Al-Isra 99", to:"Al-Kahf 74", pageStart:271, pageEnd:280},
-  {n:29, from:"Al-Kahf 75", to:"Ta-Ha 135", pageStart:281, pageEnd:290},
-  {n:30, from:"Al-Anbiya 1", to:"Al-Anbiya 112", pageStart:291, pageEnd:300},
-  {n:31, from:"Al-Hajj 1", to:"Al-Mu'minun 118", pageStart:301, pageEnd:310},
-  {n:32, from:"An-Nur 1", to:"An-Nur 64", pageStart:311, pageEnd:320},
-  {n:33, from:"Al-Furqan 1", to:"Ash-Shu'ara 110", pageStart:321, pageEnd:330},
-  {n:34, from:"Ash-Shu'ara 111", to:"An-Naml 55", pageStart:331, pageEnd:340},
-  {n:35, from:"An-Naml 56", to:"Al-Qasas 50", pageStart:341, pageEnd:350},
-  {n:36, from:"Al-Qasas 51", to:"Al-Ankabut 45", pageStart:351, pageEnd:360},
-  {n:37, from:"Al-Ankabut 46", to:"Luqman 34", pageStart:361, pageEnd:370},
-  {n:38, from:"As-Sajda 1", to:"Al-Ahzab 30", pageStart:371, pageEnd:380},
-  {n:39, from:"Al-Ahzab 31", to:"Al-Ahzab 73", pageStart:381, pageEnd:390},
-  {n:40, from:"Saba 1", to:"Fatir 45", pageStart:391, pageEnd:400},
-  {n:41, from:"Ya-Sin 1", to:"Saffat 144", pageStart:401, pageEnd:410},
-  {n:42, from:"As-Saffat 145", to:"Sad 88", pageStart:411, pageEnd:420},
-  {n:43, from:"Az-Zumar 1", to:"Az-Zumar 47", pageStart:421, pageEnd:430},
-  {n:44, from:"Az-Zumar 48", to:"Ghafir 40", pageStart:431, pageEnd:440},
-  {n:45, from:"Ghafir 41", to:"Fussilat 46", pageStart:441, pageEnd:450},
-  {n:46, from:"Fussilat 47", to:"Ash-Shura 53", pageStart:451, pageEnd:460},
-  {n:47, from:"Az-Zukhruf 1", to:"Al-Jathiya 37", pageStart:461, pageEnd:470},
-  {n:48, from:"Al-Ahqaf 1", to:"Al-Fath 17", pageStart:471, pageEnd:480},
-  {n:49, from:"Al-Fath 18", to:"Al-Hujurat 18", pageStart:481, pageEnd:490},
-  {n:50, from:"Qaf 1", to:"Adh-Dhariyat 60", pageStart:491, pageEnd:500},
-  {n:51, from:"At-Tur 1", to:"Al-Hadid 29", pageStart:501, pageEnd:510},
-  {n:52, from:"Al-Mujadila 1", to:"Al-Mumtahina 13", pageStart:511, pageEnd:520},
-  {n:53, from:"As-Saff 1", to:"At-Tahrim 12", pageStart:521, pageEnd:530},
-  {n:54, from:"Al-Mulk 1", to:"Al-Mursalat 50", pageStart:531, pageEnd:540},
-  {n:55, from:"An-Naba 1", to:"Al-Mutaffifin 34", pageStart:541, pageEnd:550},
-  {n:56, from:"Al-Inshiqaq 1", to:"Al-Fajr 30", pageStart:551, pageEnd:560},
-  {n:57, from:"Al-Balad 1", to:"Al-Bayyina 8", pageStart:561, pageEnd:570},
-  {n:58, from:"Az-Zalzala 1", to:"Al-Fil 5", pageStart:571, pageEnd:580},
-  {n:59, from:"Quraysh 1", to:"Al-Mujadila 1 bis", pageStart:581, pageEnd:590},
-  {n:60, from:"Al-A'la 1", to:"An-Nas 6", pageStart:591, pageEnd:604}
-];
-
-const surahList = [
-  "Al-Fatiha","Al-Baqara","Al-'Imran","An-Nisa","Al-Maida","Al-An'am","Al-A'raf",
-  "Al-Anfal","At-Tawba","Yunus","Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl",
-  "Al-Isra","Al-Kahf","Maryam","Ta-Ha","Al-Anbiya","Al-Hajj","Al-Mu'minun","An-Nur",
-  "Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum","Luqman",
-  "As-Sajda","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar",
-  "Ghafir","Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiya","Al-Ahqaf",
-  "Muhammad","Al-Fath","Al-Hujurat","Qaf","Adh-Dhariyat","At-Tur","An-Najm",
-  "Al-Qamar","Ar-Rahman","Al-Waqi'a","Al-Hadid","Al-Mujadila","Al-Hashr",
-  "Al-Mumtahina","As-Saff","Al-Jumu'a","Al-Munafiqun","At-Taghabun","At-Talaq",
-  "At-Tahrim","Al-Mulk","Al-Qalam","Al-Haqqah","Al-Ma'arij","Nuh","Al-Jinn",
-  "Al-Muzzammil","Al-Muddaththir","Al-Qiyama","Al-Insan","Al-Mursalat","An-Naba",
-  "An-Nazi'at","Abasa","At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq",
-  "Al-Buruj","At-Tariq","Al-A'la","Al-Ghashiya","Al-Fajr","Al-Balad","Ash-Shams",
-  "Al-Layl","Ad-Duha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyina",
-  "Az-Zalzala","Al-Adiyat","Al-Qari'a","At-Takathur","Al-Asr","Al-Humaza",
-  "Al-Fil","Quraysh","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr","Al-Masad",
-  "Al-Ikhlas","Al-Falaq","An-Nas"
+// Surah data: name, number of verses, starting page (approx, based on Madani Mushaf)
+const surahData = [
+  {n:1, name:"Al-Fatiha", verses:7, page:1},
+  {n:2, name:"Al-Baqara", verses:286, page:2},
+  {n:3, name:"Aal-E-Imran", verses:200, page:50},
+  {n:4, name:"An-Nisa", verses:176, page:77},
+  {n:5, name:"Al-Maeda", verses:120, page:106},
+  {n:6, name:"Al-Anaam", verses:165, page:128},
+  {n:7, name:"Al-Araf", verses:206, page:151},
+  {n:8, name:"Al-Anfal", verses:75, page:177},
+  {n:9, name:"At-Tawba", verses:129, page:187},
+  {n:10, name:"Yunus", verses:109, page:208},
+  {n:11, name:"Hud", verses:123, page:221},
+  {n:12, name:"Yusuf", verses:111, page:235},
+  {n:13, name:"Ar-Rad", verses:43, page:249},
+  {n:14, name:"Ibrahim", verses:52, page:255},
+  {n:15, name:"Al-Hijr", verses:99, page:261},
+  {n:16, name:"An-Nahl", verses:128, page:267},
+  {n:17, name:"Al-Isra", verses:111, page:282},
+  {n:18, name:"Al-Kahf", verses:110, page:293},
+  {n:19, name:"Maryam", verses:98, page:305},
+  {n:20, name:"Taha", verses:135, page:312},
+  {n:21, name:"Al-Anbiya", verses:112, page:322},
+  {n:22, name:"Al-Hajj", verses:78, page:331},
+  {n:23, name:"Al-Mumenoon", verses:118, page:342},
+  {n:24, name:"An-Noor", verses:64, page:350},
+  {n:25, name:"Al-Furqan", verses:77, page:359},
+  {n:26, name:"Ash-Shuara", verses:227, page:366},
+  {n:27, name:"An-Naml", verses:93, page:376},
+  {n:28, name:"Al-Qasas", verses:88, page:385},
+  {n:29, name:"Al-Ankaboot", verses:69, page:396},
+  {n:30, name:"Ar-Room", verses:60, page:404},
+  {n:31, name:"Luqman", verses:34, page:411},
+  {n:32, name:"As-Sajda", verses:30, page:415},
+  {n:33, name:"Al-Ahzab", verses:73, page:418},
+  {n:34, name:"Saba", verses:54, page:428},
+  {n:35, name:"Fatir", verses:45, page:434},
+  {n:36, name:"Ya-Seen", verses:83, page:440},
+  {n:37, name:"As-Saaffat", verses:182, page:445},
+  {n:38, name:"Sad", verses:88, page:452},
+  {n:39, name:"Az-Zumar", verses:75, page:458},
+  {n:40, name:"Al-Ghafir", verses:85, page:467},
+  {n:41, name:"Fussilat", verses:54, page:477},
+  {n:42, name:"Ash-Shura", verses:53, page:483},
+  {n:43, name:"Az-Zukhruf", verses:89, page:489},
+  {n:44, name:"Ad-Dukhan", verses:59, page:495},
+  {n:45, name:"Al-Jathiya", verses:37, page:498},
+  {n:46, name:"Al-Ahqaf", verses:35, page:502},
+  {n:47, name:"Muhammad", verses:38, page:506},
+  {n:48, name:"Al-Fatha", verses:29, page:511},
+  {n:49, name:"Al-Hujraat", verses:18, page:515},
+  {n:50, name:"Qaf", verses:45, page:518},
+  {n:51, name:"Adh-Dhariyat", verses:60, page:520},
+  {n:52, name:"At-Tur", verses:49, page:523},
+  {n:53, name:"An-Najm", verses:62, page:526},
+  {n:54, name:"Al-Qamar", verses:55, page:528},
+  {n:55, name:"Ar-Rahman", verses:78, page:531},
+  {n:56, name:"Al-Waqia", verses:96, page:534},
+  {n:57, name:"Al-Hadid", verses:29, page:537},
+  {n:58, name:"Al-Mujadila", verses:22, page:542},
+  {n:59, name:"Al-Hashr", verses:24, page:545},
+  {n:60, name:"Al-Mumtahina", verses:13, page:549},
+  {n:61, name:"As-Saff", verses:14, page:551},
+  {n:62, name:"Al-Jumua", verses:11, page:553},
+  {n:63, name:"Al-Munafiqoon", verses:11, page:554},
+  {n:64, name:"At-Taghabun", verses:18, page:556},
+  {n:65, name:"At-Talaq", verses:12, page:558},
+  {n:66, name:"At-Tahrim", verses:12, page:560},
+  {n:67, name:"Al-Mulk", verses:30, page:562},
+  {n:68, name:"Al-Qalam", verses:52, page:564},
+  {n:69, name:"Al-Haaqqa", verses:52, page:567},
+  {n:70, name:"Al-Maarij", verses:44, page:569},
+  {n:71, name:"Nooh", verses:28, page:571},
+  {n:72, name:"Al-Jinn", verses:28, page:573},
+  {n:73, name:"Al-Muzzammil", verses:20, page:576},
+  {n:74, name:"Al-Muddaththir", verses:56, page:578},
+  {n:75, name:"Al-Qiyama", verses:40, page:580},
+  {n:76, name:"Al-Insan", verses:31, page:582},
+  {n:77, name:"Al-Mursalat", verses:50, page:584},
+  {n:78, name:"An-Naba", verses:40, page:586},
+  {n:79, name:"An-Naziat", verses:46, page:587},
+  {n:80, name:"Abasa", verses:42, page:589},
+  {n:81, name:"At-Takwir", verses:29, page:590},
+  {n:82, name:"Al-Infitar", verses:19, page:591},
+  {n:83, name:"Al-Mutaffifin", verses:36, page:592},
+  {n:84, name:"Al-Inshiqaq", verses:25, page:594},
+  {n:85, name:"Al-Burooj", verses:22, page:595},
+  {n:86, name:"At-Tariq", verses:17, page:596},
+  {n:87, name:"Al-Ala", verses:19, page:597},
+  {n:88, name:"Al-Ghashiya", verses:26, page:597},
+  {n:89, name:"Al-Fajr", verses:30, page:598},
+  {n:90, name:"Al-Balad", verses:20, page:600},
+  {n:91, name:"Ash-Shams", verses:15, page:600},
+  {n:92, name:"Al-Lail", verses:21, page:601},
+  {n:93, name:"Ad-Dhuha", verses:11, page:602},
+  {n:94, name:"Al-Inshirah", verses:8, page:602},
+  {n:95, name:"At-Tin", verses:8, page:603},
+  {n:96, name:"Al-Alaq", verses:19, page:603},
+  {n:97, name:"Al-Qadr", verses:5, page:604},
+  {n:98, name:"Al-Bayyina", verses:8, page:604},
+  {n:99, name:"Az-Zalzala", verses:8, page:605},
+  {n:100, name:"Al-Adiyat", verses:11, page:605},
+  {n:101, name:"Al-Qaria", verses:11, page:606},
+  {n:102, name:"At-Takathur", verses:8, page:606},
+  {n:103, name:"Al-Asr", verses:3, page:607},
+  {n:104, name:"Al-Humaza", verses:9, page:607},
+  {n:105, name:"Al-Fil", verses:5, page:607},
+  {n:106, name:"Quraish", verses:4, page:608},
+  {n:107, name:"Al-Maun", verses:7, page:608},
+  {n:108, name:"Al-Kauther", verses:3, page:608},
+  {n:109, name:"Al-Kafiroon", verses:6, page:609},
+  {n:110, name:"An-Nasr", verses:3, page:609},
+  {n:111, name:"Al-Masadd", verses:5, page:609},
+  {n:112, name:"Al-Ikhlas", verses:4, page:610},
+  {n:113, name:"Al-Falaq", verses:5, page:610},
+  {n:114, name:"An-Nas", verses:6, page:610}
 ];
 
 window.onload = function() {
-  const fromSelect = document.getElementById('hizbFrom');
-  const toSelect = document.getElementById('hizbTo');
-  hizbData.forEach(h => {
+  const fromSurah = document.getElementById('fromSurah');
+  const toSurah = document.getElementById('toSurah');
+  const currentSurah = document.getElementById('currentSurah');
+
+  surahData.forEach(s => {
     const opt1 = document.createElement('option');
-    opt1.value = h.n;
-    opt1.textContent = `Hizb ${h.n} (${h.from} - ${h.to})`;
-    fromSelect.appendChild(opt1);
+    opt1.value = s.n;
+    opt1.textContent = `${s.n}. ${s.name} (${s.verses} verses)`;
+    fromSurah.appendChild(opt1);
 
-    const opt2 = opt1.cloneNode(true);
-    toSelect.appendChild(opt2);
+    toSurah.appendChild(opt1.cloneNode(true));
+
+    const opt3 = document.createElement('option');
+    opt3.value = s.name;
+    opt3.textContent = s.name;
+    currentSurah.appendChild(opt3);
   });
 
-  const surahSelect = document.getElementById('currentSurah');
-  surahList.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s;
-    opt.textContent = s;
-    surahSelect.appendChild(opt);
-  });
+  fromSurah.addEventListener('change', validateVerses);
+  toSurah.addEventListener('change', validateVerses);
+  document.getElementById('fromVerse').addEventListener('input', validateVerses);
+  document.getElementById('toVerse').addEventListener('input', validateVerses);
 };
+
+function validateVerses() {
+  const errorBox = document.getElementById('verseError');
+  const fromS = surahData.find(s => s.n == document.getElementById('fromSurah').value);
+  const toS = surahData.find(s => s.n == document.getElementById('toSurah').value);
+  const fromV = parseInt(document.getElementById('fromVerse').value);
+  const toV = parseInt(document.getElementById('toVerse').value);
+
+  let msg = "";
+  if (fromS && fromV && fromV > fromS.verses) {
+    msg = `⚠️ ${fromS.name} only has ${fromS.verses} verses.`;
+  }
+  if (toS && toV && toV > toS.verses) {
+    msg = `⚠️ ${toS.name} only has ${toS.verses} verses.`;
+  }
+
+  if (msg) {
+    errorBox.textContent = msg;
+    errorBox.style.display = 'block';
+  } else {
+    errorBox.style.display = 'none';
+  }
+}
+
+function estimatePage(surah, verse) {
+  // Estimate page number based on surah start page + proportion of verses
+  const nextSurah = surahData.find(s => s.n === surah.n + 1);
+  const pageSpan = nextSurah ? (nextSurah.page - surah.page) : 14;
+  const proportion = verse / surah.verses;
+  return Math.round(surah.page + proportion * pageSpan);
+}
 
 function generateCalendar() {
   const name = document.getElementById('studentName').value || "Student";
-  const hizbFrom = parseInt(document.getElementById('hizbFrom').value) || 0;
-  const hizbTo = parseInt(document.getElementById('hizbTo').value) || 0;
+  const fromS = surahData.find(s => s.n == document.getElementById('fromSurah').value);
+  const toS = surahData.find(s => s.n == document.getElementById('toSurah').value);
+  const fromV = parseInt(document.getElementById('fromVerse').value) || 1;
+  const toV = parseInt(document.getElementById('toVerse').value) || 1;
   const currentSurah = document.getElementById('currentSurah').value;
   const lastPage = parseInt(document.getElementById('lastPageInput').value) || 0;
   const startDayIndex = parseInt(document.getElementById('startDay').value);
 
   const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
-  let hizbRangeText = "None";
+  let oldRangeText = "None";
   let realStartPage = 0;
   let realEndPage = 0;
 
-  if (hizbFrom && hizbTo && hizbTo >= hizbFrom) {
-    const fromData = hizbData.find(h => h.n === hizbFrom);
-    const toData = hizbData.find(h => h.n === hizbTo);
-    realStartPage = fromData.pageStart;
-    realEndPage = toData.pageEnd;
-    hizbRangeText = `Hizb ${hizbFrom} to ${hizbTo} (pages ${realStartPage}-${realEndPage})`;
+  if (fromS && toS) {
+    realStartPage = estimatePage(fromS, fromV);
+    realEndPage = estimatePage(toS, toV);
+    if (realEndPage < realStartPage) realEndPage = realStartPage;
+    oldRangeText = `${fromS.name} ${fromV} → ${toS.name} ${toV} (approx. pages ${realStartPage}-${realEndPage})`;
   }
 
   const totalOldPages = realEndPage > 0 ? (realEndPage - realStartPage + 1) : 0;
-  const cycleLength = totalOldPages >= 10 ? 7 : 4;
+
+  // Cycle rule: if less than 1 hizb (~10 pages) -> 4 working days, else 6 working days + 1 rest day
+  const workingDays = totalOldPages > 0 && totalOldPages < 10 ? 4 : 6;
+  const cycleLength = workingDays + 1; // +1 rest day
 
   let oldPortions = [];
   if (totalOldPages > 0) {
-    const base = Math.floor(totalOldPages / cycleLength);
-    const remainder = totalOldPages % cycleLength;
+    const base = Math.floor(totalOldPages / workingDays);
+    const remainder = totalOldPages % workingDays;
     let startP = realStartPage;
-    for (let i = 0; i < cycleLength; i++) {
+    for (let i = 0; i < workingDays; i++) {
       let size = base + (i < remainder ? 1 : 0);
       if (size === 0) size = 1;
       const endP = Math.min(startP + size - 1, realEndPage);
@@ -1449,13 +1545,13 @@ function generateCalendar() {
   let rows = "";
   for (let i = 0; i < 7; i++) {
     const dayName = days[(startDayIndex + i) % 7];
-    let oldTask = "Rest day ✅";
+    let oldTask = "No old revision set";
     if (oldPortions.length > 0) {
-      const idx = i % (cycleLength + 1);
-      if (idx < cycleLength) {
+      const idx = i % cycleLength;
+      if (idx < workingDays) {
         oldTask = oldPortions[idx];
       } else {
-        oldTask = "Rest day ✅ (end of cycle)";
+        oldTask = "😴 Rest day (old revision)";
       }
     }
     rows += `
@@ -1469,7 +1565,7 @@ function generateCalendar() {
   }
 
   document.getElementById('calStudentTitle').textContent = `Revision Programme — ${name}`;
-  let subtitle = `Completed Hizb: ${hizbRangeText}`;
+  let subtitle = `Old revision: ${oldRangeText} | Cycle: ${workingDays} days + 1 rest day`;
   if (currentSurah) subtitle += ` | Currently memorising: ${currentSurah}`;
   document.getElementById('calSubtitle').textContent = subtitle;
   document.getElementById('calendarBody').innerHTML = rows;
